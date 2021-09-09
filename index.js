@@ -6,10 +6,8 @@ const URL=process.env.URL||'https://tarifmatrix.vbn.de:4445/fares/info';
 debug('URL: '+URL)
 
 const USR=process.env.USR||'USR';
-debug('USR: '+USR)
 
 const KEY=process.env.KEY||'KEY';
-debug('KEY: '+KEY)
 
 /**
  * Disable server authorization only in development mode
@@ -43,36 +41,15 @@ async function run() {
 		password: `${KEY}`
 	    }
 	}
-    ).then(res => res.data);
-//    );
-//    res.status; // 200
+//async example to process responce
+//    ).then(res => {
+//	debug('res.data: %s',res.data)
+//    });
+    );
 
     debug('data received via GET');
-    debug('dataGet len: %s',dataGet.length)
-//    debug('dataGet: %s',dataGet)
-    debug('dataGet: %s',JSON.stringify(dataGet))
-//    debug('res JSON: %s',JSON.stringify(res));
-
-/*
-    //HTTP POST
-
-    //url as first,
-    //request body as second and
-    //options as third  POST argument
-    //response is returned
-    const res=await axios.post(
-	'http://localhost:3000/user',
-	//'https://dedriver.org/gtfs/realtime',
-	encodedPost,
-	{
-	    headers:{
-		'content-type':'application/octet-stream'}
-	    //		'content-type':'application/x-protobuf'}
-	    //'transformRequest':[]
-	}
-    ).then(res => res.data);
-    debug('POST sent');
-    debug('res JSON: %s',JSON.stringify(res));
-    //debug('res content-type: %s',res.data.headers['content-type']);
-*/
+    debug('dataGet: %s',dataGet)
+    debug('dataGet.data.length: %s',dataGet.data.length)
+    debug('dataGet.data: %s',dataGet.data)
+    debug('dataGet.data[0].extern: %s',dataGet.data[0].extern)
 } 
