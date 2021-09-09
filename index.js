@@ -2,11 +2,14 @@ require('dotenv').config();
 const axios = require('axios');
 const debug=require('debug')('axios');
 
-const URL=process.env.URL||'https://dedriver.org/gtfs/realtime';
+const URL=process.env.URL||'https://tarifmatrix.vbn.de:4445/fares/info';
 debug('URL: '+URL)
 
-const TOKEN=process.env.TOKEN||'TOKEN';
-debug('TOKEN: '+TOKEN)
+const USR=process.env.USR||'USR';
+debug('USR: '+USR)
+
+const KEY=process.env.KEY||'KEY';
+debug('KEY: '+KEY)
 
 run().catch(err => {
     debug('run: error')
@@ -19,22 +22,22 @@ async function run() {
 
     //HTTP GET
     let dataGet = await axios.get(
-	//'https://dedriver.org/gtfs/realtime',
 	URL,
-	//'http://67.212.79.244:8080/hermes_st_Transcollines/pb/vehiclePositions.pb',
-	//'https://dedriver.org/gtfs-rt/vehiclePostions.pb',
-	//'http://localhost:3000/user',
-    	{
-	    headers:{
-		'accept':'application/octet-stream',
-		'authorization':`${TOKEN}`
-		//'authorization':`Basic ${TOKEN}`
+	{
+	    // Axios looks for the `auth` option, and, if it is set, formats a
+	    // basic auth header for you automatically.
+	    auth: {
+		username: `${USR}`,
+		password: `${KEY}`
 	    }
-	}
-    )
-	.then(res => res.data);
+	});
+    res.status; // 200
+
     debug('data received via GET');
     debug('dataGet len: %s',dataGet.length)
+//    debug('dataGet: %s',dataGet)
+    debug('dataGet: %s',JSON.stringify(dataGet))
+//    debug('res JSON: %s',JSON.stringify(res));
 
 /*
     //HTTP POST
