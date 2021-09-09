@@ -11,6 +11,18 @@ debug('USR: '+USR)
 const KEY=process.env.KEY||'KEY';
 debug('KEY: '+KEY)
 
+/**
+ * Disable server authorization only in development mode
+ */
+if (process.env.NODE_ENV === 'development') {
+    const https = require('https');
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  })
+  axios.defaults.httpsAgent = httpsAgent
+  debug('%s RejectUnauthorized is disabled.',process.env.NODE_ENV)
+}
+
 run().catch(err => {
     debug('run: error')
     console.log(err)
@@ -30,8 +42,10 @@ async function run() {
 		username: `${USR}`,
 		password: `${KEY}`
 	    }
-	});
-    res.status; // 200
+	}
+    ).then(res => res.data);
+//    );
+//    res.status; // 200
 
     debug('data received via GET');
     debug('dataGet len: %s',dataGet.length)
