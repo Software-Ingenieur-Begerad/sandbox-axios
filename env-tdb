@@ -1,4 +1,0 @@
-NODE_ENV=development
-URL=https://test-tarifmatrix.vbn.de:4245/fares/areas/info
-USR=<refer to tdb repo>
-KEY=<refer to tdb repo>
