@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
     rejectUnauthorized: false,
   })
   axios.defaults.httpsAgent = httpsAgent
-  debug('%s RejectUnauthorized is disabled.',process.env.NODE_ENV)
+  debug('%s mode, RejectUnauthorized is disabled.',process.env.NODE_ENV)
 }
 
 run().catch(err => {
