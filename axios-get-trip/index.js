@@ -6,23 +6,31 @@ const debug=require('debug')('trips');
 const URL=process.env.URL;
 debug('URL: '+URL)
 
-let dataGet='';
+let dataTrips='';
 let dataServices='';
 
-run(dataGet,dataServices).catch(err => {
+run(dataTrips,dataServices).catch(err => {
     debug('run: error')
     console.log(err)
 });
 
-async function handleTrip(element){
+
+async function run(dataTrips, dataServices) {
+    debug('run:...')
+
+    dataTrips = await axios.get(URL);
+    let tripsCount=dataTrips.data.length;
+    debug('dataTrips.data.length: '+tripsCount);
+
     const mapTime=new Map();
     mapTime.clear();
 
-	const tripId=element.trip_id;
+    for(var i = 0; i < tripsCount; i++){
+	const tripId=dataTrips.data[i].trip_id;
 	//debug('tripId: %s',tripId);
-	const tripShortName=element.trip_short_name;
+	const tripShortName=dataTrips.data[i].trip_short_name;
 	//debug('tripShortName: %s',tripShortName);
-	const serviceId=element.service_id;
+	const serviceId=dataTrips.data[i].service_id;
 	//debug('serviceId: %s',serviceId);
 
 	const queryService=`http://localhost:65534/service?serviceid=${serviceId}`;
@@ -62,23 +70,9 @@ async function handleTrip(element){
 		updateMap(dateNext.getTime(),tripId,tripShortName,mapTime);
 	    }
 	    dateNext=new Date(dateNext.setDate(dateNext.getDate()+1));
-	    //debug('dateNext: '+dateNext.getDate());
-	    //debug('dateNext.getTime(): '+dateNext.getTime());
 	}
-	//debug('dateEnd: '+dateEnd);
-    //debug('dateNext: '+dateNext);
-    return mapTime;
-}
-
-async function run(dataTrips, dataServices) {
-    debug('run:...')
-
-    //HTTP GET
-    dataTrips = await axios.get(URL);
-
-    //TODO refactor callback function
-    const map=new Map(dataTrips.data.forEach(handleTrip));
-    debug('map.size: '+map.size);
+    }
+    debug('mapTime.size: '+mapTime.size);
 }
 
 function updateMap(time,tripId,tripShortName,map){
