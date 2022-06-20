@@ -1,5 +1,17 @@
 {
-  "extends": [
-    "config:base"
-  ]
+    "extends": [
+	"config:base"
+    ],
+    "timezone": "Europe/Berlin",
+    "schedule": [
+	"after 10pm every weekday",
+	"before 5am every weekday",
+	"every weekend"
+    ],
+    "packageRules": [
+	{
+	    "matchDepTypes": ["devDependencies"],
+	    "automerge": true
+	}
+    ]
 }
