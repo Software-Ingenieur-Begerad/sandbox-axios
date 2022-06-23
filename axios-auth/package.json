@@ -10,8 +10,8 @@
   "author": "Stefan Begerad",
   "license": "GPL-3.0",
   "devDependencies": {
-    "https": "^1.0.0",
-    "nodemon": "^2.0.7"
+    "https": "1.0.0",
+    "nodemon": "2.0.18"
   },
   "dependencies": {
     "axios": "^0.21.1",
